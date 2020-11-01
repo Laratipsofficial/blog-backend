@@ -50,6 +50,10 @@
                                         Profile
                                     </jet-dropdown-link>
 
+                                    <jet-dropdown-link :href="route('settings.create')">
+                                        Settings
+                                    </jet-dropdown-link>
+
                                     <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.jetstream.hasApiFeatures">
                                         API Tokens
                                     </jet-dropdown-link>
