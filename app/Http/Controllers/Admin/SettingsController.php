@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\UploadFile;
 use Inertia\Inertia;
 use App\Models\Setting;
 use Illuminate\Support\Str;
@@ -37,18 +38,17 @@ class SettingsController extends Controller
         if ($request->file('hero_image')) {
             $this->settings->deleteHeroImage();
 
-            $imageName = (string) Str::of($request->file('hero_image')->getClientOriginalName())
-                ->beforeLast('.')
-                ->slug()
-                ->append('.')
-                ->append($request->file('hero_image')->getClientOriginalExtension());
+            $imageName = (new UploadFile)
+                ->setFile($request->file('hero_image'))
+                ->setUploadPath($this->settings->uploadFolder())
+                ->execute();
 
             $data['hero_image'] = $imageName;
-
-            $request->file('hero_image')->storeAs($this->settings->uploadFolder(), $imageName);
         }
 
-        $this->settings->data = $data;
+        $mergedData = array_merge($this->settings->data, $data);
+
+        $this->settings->data = $mergedData;
         $this->settings->save();
 
         return redirect()->back();
