@@ -29,11 +29,7 @@ class Setting extends Model
 
     public function heroImageUrl(): ?string
     {
-        $imageName = Arr::get($this->data, 'hero_image');
-
-        return $imageName === null
-            ? 'https://ui-avatars.com/api/?name=hero_image&color=7F9CF5&background=EBF4FF'
-            : Storage::url("{$this->uploadFolder()}/{$imageName}"); 
+        return $this->imageUrl('hero_image');
     }
 
     public function deleteHeroImage(): void
@@ -43,5 +39,24 @@ class Setting extends Model
         if ($imageName !== null) {
             Storage::delete("{$this->uploadFolder()}/{$imageName}");
         }
+    }
+
+    public function aboutDescription(): ?string
+    {
+        return Arr::get($this->data, 'about_description');
+    }
+
+    public function aboutImageUrl(): ?string
+    {
+        return $this->imageUrl('about_image');
+    }
+
+    public function imageUrl(string $column): ?string
+    {
+        $imageName = Arr::get($this->data, $column);
+
+        return $imageName === null
+            ? "https://ui-avatars.com/api/?name={$column}&color=7F9CF5&background=EBF4FF"
+            : Storage::url("{$this->uploadFolder()}/{$imageName}"); 
     }
 }

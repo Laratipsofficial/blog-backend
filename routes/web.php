@@ -14,4 +14,5 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('settings', [SettingsController::class, 'create'])->name('settings.create');
         Route::post('settings/save-hero', [SettingsController::class, 'saveHero'])->name('settings.save-hero');
+        Route::post('settings/save-about', [SettingsController::class, 'saveAbout'])->name('settings.save-about');
     });

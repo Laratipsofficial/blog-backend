@@ -8,6 +8,7 @@ use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveAboutRequest;
 use App\Http\Resources\SettingsResource;
 
 class SettingsController extends Controller
@@ -46,11 +47,34 @@ class SettingsController extends Controller
             $data['hero_image'] = $imageName;
         }
 
-        $mergedData = array_merge($this->settings->data, $data);
-
-        $this->settings->data = $mergedData;
-        $this->settings->save();
+        $this->save($data);
 
         return redirect()->back();
+    }
+
+    public function saveAbout(SaveAboutRequest $request)
+    {
+        $data['about_description'] = $request->get('about_description');
+
+        if ($request->file('about_image')) {
+            $this->settings->deleteHeroImage();
+
+            $imageName = (new UploadFile)
+                ->setFile($request->file('about_image'))
+                ->setUploadPath($this->settings->uploadFolder())
+                ->execute();
+
+            $data['about_image'] = $imageName;
+        }
+
+        $this->save($data);
+
+        return redirect()->back();
+    }
+
+    private function save(array $data): void
+    {
+        $this->settings->data = array_merge($this->settings->data, $data);
+        $this->settings->save();
     }
 }
