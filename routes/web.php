@@ -15,4 +15,5 @@ Route::middleware(['auth', 'verified'])
         Route::get('settings', [SettingsController::class, 'create'])->name('settings.create');
         Route::post('settings/save-hero', [SettingsController::class, 'saveHero'])->name('settings.save-hero');
         Route::post('settings/save-about', [SettingsController::class, 'saveAbout'])->name('settings.save-about');
+        Route::post('settings/save-contact', [SettingsController::class, 'saveContact'])->name('settings.save-contact');
     });
