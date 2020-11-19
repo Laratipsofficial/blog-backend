@@ -17,6 +17,10 @@
                             <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                 Dashboard
                             </jet-nav-link>
+
+                            <jet-nav-link :href="route('categories.index')" :active="route().current('categories.index')">
+                                Categories
+                            </jet-nav-link>
                         </div>
                     </div>
 
@@ -205,6 +209,7 @@
 
         <!-- Page Content -->
         <main>
+            <FlashMessage />
             <slot></slot>
         </main>
 
@@ -219,7 +224,8 @@
     import JetDropdown from '@/Jetstream/Dropdown'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
-    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink';
+    import FlashMessage from "@/Components/FlashMessage"
 
     export default {
         components: {
@@ -228,6 +234,7 @@
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
+            FlashMessage,
         },
 
         data() {
