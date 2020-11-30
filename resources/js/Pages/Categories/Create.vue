@@ -1,9 +1,7 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Category > Add Category
-      </h2>
+      <Breadcrumbs :items="breadcrumbs" />
     </template>
 
     <Container>
@@ -60,6 +58,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetActionMessage from "@/Jetstream/ActionMessage";
 import Container from "@/Components/Container";
 import Card from "@/Components/Card";
+import Breadcrumbs from "@/Components/Breadcrumbs";
 import { strSlug } from "@/helpers.js";
 
 export default {
@@ -72,6 +71,7 @@ export default {
     JetActionMessage,
     Container,
     Card,
+    Breadcrumbs,
   },
 
   data() {
@@ -81,6 +81,20 @@ export default {
         slug: "",
       }),
     };
+  },
+
+  computed: {
+    breadcrumbs() {
+      return [
+        {
+          label: "Categories",
+          url: route('categories.index'),
+        },
+        {
+          label: "Add Category"
+        }
+      ];
+    }
   },
 
   methods: {

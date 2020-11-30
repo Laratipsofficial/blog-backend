@@ -1,9 +1,7 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Settings
-      </h2>
+      <Breadcrumbs :items="breadcrumbs" />
     </template>
 
     <div>
@@ -27,7 +25,8 @@ import AppLayout from "@/Layouts/AppLayout";
 import UpdateHeroData from "./UpdateHeroData";
 import UpdateAboutData from "./UpdateAboutData";
 import UpdateContactData from "./UpdateContactData";
-import JetSectionBorder from '@/Jetstream/SectionBorder'
+import JetSectionBorder from "@/Jetstream/SectionBorder";
+import Breadcrumbs from "@/Components/Breadcrumbs";
 
 export default {
   props: ["settings"],
@@ -38,6 +37,17 @@ export default {
     JetSectionBorder,
     UpdateAboutData,
     UpdateContactData,
+    Breadcrumbs,
+  },
+
+  computed: {
+    breadcrumbs() {
+      return [
+        {
+          label: "Settings",
+        },
+      ];
+    },
   },
 };
 </script>

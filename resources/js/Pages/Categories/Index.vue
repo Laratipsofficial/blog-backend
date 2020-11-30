@@ -1,9 +1,7 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Categories
-      </h2>
+      <Breadcrumbs :items="breadcrumbs" />
     </template>
 
     <Container>
@@ -41,6 +39,7 @@ import SimplePagination from "@/Components/SimplePagination";
 import AppTable from "@/Components/Table";
 import Container from "@/Components/Container";
 import Card from "@/Components/Card";
+import Breadcrumbs from "@/Components/Breadcrumbs";
 import JetButton from "@/Jetstream/Button";
 
 export default {
@@ -57,6 +56,7 @@ export default {
     JetButton,
     Container,
     Card,
+    Breadcrumbs,
   },
 
   computed: {
@@ -71,6 +71,14 @@ export default {
         },
       ];
     },
+
+    breadcrumbs() {
+      return [
+        {
+          label: "Categories"
+        }
+      ];
+    }
   },
 };
 </script>
