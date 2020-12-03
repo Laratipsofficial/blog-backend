@@ -12,6 +12,7 @@
           <tr v-for="category in categories.data"
               :key="category.id">
             <td>{{ category.name }}</td>
+            <td>{{ category.created_at_for_human }}</td>
             <td>
               <div class="flex items-center justify-end space-x-2">
                 <EditBtn :url="route('categories.edit', {category: category.id})" />
@@ -64,6 +65,9 @@ export default {
       return [
         {
           name: "Name",
+        },
+        {
+          name: "Created Date",
         },
         {
           name: "Action",

@@ -3890,6 +3890,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3912,6 +3914,10 @@ __webpack_require__.r(__webpack_exports__);
     Card: _Components_Card__WEBPACK_IMPORTED_MODULE_7__["default"],
     Breadcrumbs: _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
+  props: {
+    edit: Boolean,
+    category: Object
+  },
   data: function data() {
     return {
       form: this.$inertia.form({
@@ -3926,18 +3932,26 @@ __webpack_require__.r(__webpack_exports__);
         label: "Categories",
         url: route('categories.index')
       }, {
-        label: "Add Category"
+        label: "".concat(this.edit ? 'Edit' : 'Add', " Category")
       }];
     }
   },
   methods: {
     saveCategory: function saveCategory() {
-      this.form.post(route("categories.store"));
+      this.edit ? this.form.put(route("categories.update", {
+        id: this.category.data.id
+      })) : this.form.post(route("categories.store"));
     }
   },
   watch: {
     "form.name": function formName(name) {
       this.form.slug = Object(_helpers_js__WEBPACK_IMPORTED_MODULE_9__["strSlug"])(name);
+    }
+  },
+  mounted: function mounted() {
+    if (this.edit) {
+      this.form.name = this.category.data.name;
+      this.form.slug = this.category.data.slug;
     }
   }
 });
@@ -3962,6 +3976,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/Card */ "./resources/js/Components/Card.vue");
 /* harmony import */ var _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Breadcrumbs */ "./resources/js/Components/Breadcrumbs.vue");
 /* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+//
 //
 //
 //
@@ -4023,6 +4038,8 @@ __webpack_require__.r(__webpack_exports__);
     headers: function headers() {
       return [{
         name: "Name"
+      }, {
+        name: "Created Date"
       }, {
         name: "Action",
         "class": "text-right"
@@ -27379,7 +27396,11 @@ var render = function() {
                         staticClass: "mr-3",
                         attrs: { on: _vm.form.recentlySuccessful }
                       },
-                      [_vm._v("\n            Saved.\n          ")]
+                      [
+                        _vm.edit
+                          ? _c("span", [_vm._v("Updated.")])
+                          : _c("span", [_vm._v("Saved.")])
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -27388,7 +27409,11 @@ var render = function() {
                         class: { "opacity-25": _vm.form.processing },
                         attrs: { disabled: _vm.form.processing }
                       },
-                      [_vm._v("\n            Save\n          ")]
+                      [
+                        _vm.edit
+                          ? _c("span", [_vm._v("Update")])
+                          : _c("span", [_vm._v("Save")])
+                      ]
                     )
                   ],
                   1
@@ -27459,6 +27484,8 @@ var render = function() {
                 _vm._l(_vm.categories.data, function(category) {
                   return _c("tr", { key: category.id }, [
                     _c("td", [_vm._v(_vm._s(category.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(category.created_at_for_human))]),
                     _vm._v(" "),
                     _c("td", [
                       _c(

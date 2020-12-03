@@ -35,12 +35,14 @@
           <div class="mt-4">
             <jet-action-message :on="form.recentlySuccessful"
                                 class="mr-3">
-              Saved.
+              <span v-if="edit">Updated.</span>
+              <span v-else>Saved.</span>
             </jet-action-message>
 
             <jet-button :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing">
-              Save
+              <span v-if="edit">Update</span>
+              <span v-else>Save</span>
             </jet-button>
           </div>
         </form>
@@ -74,6 +76,11 @@ export default {
     Breadcrumbs,
   },
 
+  props: {
+    edit: Boolean,
+    category: Object,
+  },
+
   data() {
     return {
       form: this.$inertia.form({
@@ -91,7 +98,7 @@ export default {
           url: route('categories.index'),
         },
         {
-          label: "Add Category"
+          label: `${this.edit ? 'Edit' : 'Add'} Category`
         }
       ];
     }
@@ -99,7 +106,9 @@ export default {
 
   methods: {
     saveCategory() {
-      this.form.post(route("categories.store"));
+      this.edit
+        ? this.form.put(route("categories.update", {id: this.category.data.id }))
+        : this.form.post(route("categories.store"));
     },
   },
 
@@ -108,5 +117,12 @@ export default {
       this.form.slug = strSlug(name);
     },
   },
+
+  mounted() {
+    if (this.edit) {
+      this.form.name = this.category.data.name;
+      this.form.slug = this.category.data.slug;
+    }
+  }
 };
 </script>
