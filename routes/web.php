@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticlesController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -18,4 +19,5 @@ Route::middleware(['auth', 'verified'])
         Route::post('settings/save-about', [SettingsController::class, 'saveAbout'])->name('settings.save-about');
         Route::post('settings/save-contact', [SettingsController::class, 'saveContact'])->name('settings.save-contact');
         Route::resource('categories', CategoriesController::class);
+        Route::resource('articles', ArticlesController::class);
     });
