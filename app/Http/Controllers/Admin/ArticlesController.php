@@ -62,11 +62,12 @@ class ArticlesController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
-    public function destroy(Category $category)
+    public function destroy(Article $article)
     {
-        $category->delete();
+        // TODO: Implement the delete image part
+        $article->delete();
 
-        return redirect()->route('categories.index')
-            ->with('success', 'Category deleted successfully.');
+        return redirect()->route('articles.index')
+            ->with('success', 'Article deleted successfully.');
     }
 }
