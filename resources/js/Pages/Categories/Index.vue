@@ -8,7 +8,8 @@
       <jet-button :href="route('categories.create')">Add new</jet-button>
 
       <Card class="mt-4">
-        <AppTable :headers="headers">
+        <AppTable :headers="headers"
+                  :items="categories">
           <tr v-for="category in categories.data"
               :key="category.id">
             <td>{{ category.name }}</td>
@@ -22,11 +23,6 @@
             </td>
           </tr>
         </AppTable>
-
-        <div class="mt-4">
-          <SimplePagination :prev-url="categories.links.prev"
-                            :next-url="categories.links.next" />
-        </div>
       </Card>
     </Container>
   </app-layout>
@@ -36,7 +32,6 @@
 import AppLayout from "@/Layouts/AppLayout";
 import EditBtn from "@/Components/EditBtn";
 import DeleteBtn from "@/Components/DeleteBtn";
-import SimplePagination from "@/Components/SimplePagination";
 import AppTable from "@/Components/Table";
 import Container from "@/Components/Container";
 import Card from "@/Components/Card";
@@ -52,7 +47,6 @@ export default {
     AppLayout,
     EditBtn,
     DeleteBtn,
-    SimplePagination,
     AppTable,
     JetButton,
     Container,
@@ -79,10 +73,10 @@ export default {
     breadcrumbs() {
       return [
         {
-          label: "Categories"
-        }
+          label: "Categories",
+        },
       ];
-    }
+    },
   },
 };
 </script>

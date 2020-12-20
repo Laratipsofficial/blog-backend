@@ -2374,6 +2374,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Components_SimplePagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/SimplePagination */ "./resources/js/Components/SimplePagination.vue");
 //
 //
 //
@@ -2389,10 +2390,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SimplePagination: _Components_SimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
     headers: {
       type: Array,
+      required: true
+    },
+    items: {
+      type: Object,
       required: true
     }
   },
@@ -4011,15 +4034,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4059,7 +4073,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     breadcrumbs: function breadcrumbs() {
       return [{
-        label: "Categories"
+        label: "Articles"
       }];
     }
   }
@@ -4217,12 +4231,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Components_EditBtn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/EditBtn */ "./resources/js/Components/EditBtn.vue");
 /* harmony import */ var _Components_DeleteBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/DeleteBtn */ "./resources/js/Components/DeleteBtn.vue");
-/* harmony import */ var _Components_SimplePagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/SimplePagination */ "./resources/js/Components/SimplePagination.vue");
-/* harmony import */ var _Components_Table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Table */ "./resources/js/Components/Table.vue");
-/* harmony import */ var _Components_Container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Container */ "./resources/js/Components/Container.vue");
-/* harmony import */ var _Components_Card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/Card */ "./resources/js/Components/Card.vue");
-/* harmony import */ var _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Breadcrumbs */ "./resources/js/Components/Breadcrumbs.vue");
-/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Components_Table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Table */ "./resources/js/Components/Table.vue");
+/* harmony import */ var _Components_Container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Container */ "./resources/js/Components/Container.vue");
+/* harmony import */ var _Components_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Card */ "./resources/js/Components/Card.vue");
+/* harmony import */ var _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/Breadcrumbs */ "./resources/js/Components/Breadcrumbs.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
 //
 //
 //
@@ -4253,11 +4266,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-
 
 
 
@@ -4274,12 +4282,11 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     EditBtn: _Components_EditBtn__WEBPACK_IMPORTED_MODULE_1__["default"],
     DeleteBtn: _Components_DeleteBtn__WEBPACK_IMPORTED_MODULE_2__["default"],
-    SimplePagination: _Components_SimplePagination__WEBPACK_IMPORTED_MODULE_3__["default"],
-    AppTable: _Components_Table__WEBPACK_IMPORTED_MODULE_4__["default"],
-    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Container: _Components_Container__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Card: _Components_Card__WEBPACK_IMPORTED_MODULE_6__["default"],
-    Breadcrumbs: _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_7__["default"]
+    AppTable: _Components_Table__WEBPACK_IMPORTED_MODULE_3__["default"],
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_7__["default"],
+    Container: _Components_Container__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Card: _Components_Card__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Breadcrumbs: _Components_Breadcrumbs__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   computed: {
     headers: function headers() {
@@ -24899,22 +24906,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", [
-    _c("thead", [
+  return _c("div", [
+    _c("table", [
+      _c("thead", [
+        _c(
+          "tr",
+          _vm._l(_vm.headers, function(header, index) {
+            return _c(
+              "th",
+              { key: "header-" + index, class: header.class || "text-left" },
+              [_vm._v(_vm._s(header.name))]
+            )
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
       _c(
-        "tr",
-        _vm._l(_vm.headers, function(header, index) {
-          return _c(
-            "th",
-            { key: "header-" + index, class: header.class || "text-left" },
-            [_vm._v(_vm._s(header.name))]
-          )
-        }),
-        0
+        "tbody",
+        [
+          _vm._t("default"),
+          _vm._v(" "),
+          _vm.items.data.length === 0
+            ? _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "p-4",
+                    attrs: { colspan: _vm.headers.length }
+                  },
+                  [_vm._v("\n          No data available\n        ")]
+                )
+              ])
+            : _vm._e()
+        ],
+        2
       )
     ]),
     _vm._v(" "),
-    _c("tbody", [_vm._t("default")], 2)
+    _vm.items.data.length > 0
+      ? _c(
+          "div",
+          { staticClass: "mt-4" },
+          [
+            _c("SimplePagination", {
+              attrs: {
+                "prev-url": _vm.items.links.prev,
+                "next-url": _vm.items.links.next
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -27740,79 +27784,46 @@ var render = function() {
             [
               _c(
                 "AppTable",
-                { attrs: { headers: _vm.headers } },
-                [
-                  _vm._l(_vm.articles.data, function(article) {
-                    return _c("tr", { key: article.id }, [
-                      _c("td", [_vm._v(_vm._s(article.title))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(article.category.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(article.created_at_for_human))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "flex items-center justify-end space-x-2"
-                          },
-                          [
-                            _c("EditBtn", {
-                              attrs: {
-                                url: _vm.route("articles.edit", {
-                                  article: article.id
-                                })
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("DeleteBtn", {
-                              attrs: {
-                                url: _vm.route("articles.destroy", {
-                                  article: article.id
-                                }),
-                                "module-name": "article"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ])
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _vm.articles.data.length === 0
-                    ? _c(
-                        "tr",
-                        { attrs: { "aria-colspan": _vm.headers.length } },
+                { attrs: { headers: _vm.headers, items: _vm.articles } },
+                _vm._l(_vm.articles.data, function(article) {
+                  return _c("tr", { key: article.id }, [
+                    _c("td", [_vm._v(_vm._s(article.title))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(article.category.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(article.created_at_for_human))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "flex items-center justify-end space-x-2"
+                        },
                         [
-                          _c("div", { staticClass: "p-4" }, [
-                            _vm._v(
-                              "\n            No data available\n          "
-                            )
-                          ])
-                        ]
+                          _c("EditBtn", {
+                            attrs: {
+                              url: _vm.route("articles.edit", {
+                                article: article.id
+                              })
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("DeleteBtn", {
+                            attrs: {
+                              url: _vm.route("articles.destroy", {
+                                article: article.id
+                              }),
+                              "module-name": "article"
+                            }
+                          })
+                        ],
+                        1
                       )
-                    : _vm._e()
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm.articles.data.length > 0
-                ? _c(
-                    "div",
-                    { staticClass: "mt-4" },
-                    [
-                      _c("SimplePagination", {
-                        attrs: {
-                          "prev-url": _vm.articles.links.prev,
-                          "next-url": _vm.articles.links.next
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
+                    ])
+                  ])
+                }),
+                0
+              )
             ],
             1
           )
@@ -28020,7 +28031,7 @@ var render = function() {
             [
               _c(
                 "AppTable",
-                { attrs: { headers: _vm.headers } },
+                { attrs: { headers: _vm.headers, items: _vm.categories } },
                 _vm._l(_vm.categories.data, function(category) {
                   return _c("tr", { key: category.id }, [
                     _c("td", [_vm._v(_vm._s(category.name))]),
@@ -28057,20 +28068,6 @@ var render = function() {
                   ])
                 }),
                 0
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mt-4" },
-                [
-                  _c("SimplePagination", {
-                    attrs: {
-                      "prev-url": _vm.categories.links.prev,
-                      "next-url": _vm.categories.links.next
-                    }
-                  })
-                ],
-                1
               )
             ],
             1

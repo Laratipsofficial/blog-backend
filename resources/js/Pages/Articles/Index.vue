@@ -8,7 +8,8 @@
       <jet-button :href="route('articles.create')">Add new</jet-button>
 
       <Card class="mt-4">
-        <AppTable :headers="headers">
+        <AppTable :headers="headers"
+                  :items="articles">
           <tr v-for="article in articles.data"
               :key="article.id">
             <td>{{ article.title }}</td>
@@ -22,17 +23,7 @@
               </div>
             </td>
           </tr>
-          <tr v-if="articles.data.length === 0" :aria-colspan="headers.length">
-            <div class="p-4">
-              No data available
-            </div>
-          </tr>
         </AppTable>
-
-        <div v-if="articles.data.length > 0" class="mt-4">
-          <SimplePagination :prev-url="articles.links.prev"
-                            :next-url="articles.links.next" />
-        </div>
       </Card>
     </Container>
   </app-layout>
@@ -88,10 +79,10 @@ export default {
     breadcrumbs() {
       return [
         {
-          label: "Categories"
-        }
+          label: "Articles",
+        },
       ];
-    }
+    },
   },
 };
 </script>
