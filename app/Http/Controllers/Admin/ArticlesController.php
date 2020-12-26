@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\UploadFile;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
 use App\Http\Resources\CategoryResource;
@@ -24,22 +25,30 @@ class ArticlesController extends Controller
 
     public function create(Request $request)
     {
-        return Inertia::render('Categories/Create', [
+        return Inertia::render('Articles/Create', [
             'edit' => false,
-            'category' => (object) []
+            'article' => new ArticleResource(new Article()),
+            'categories' => CategoryResource::collection(Category::select(['id', 'name'])->get()),
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, UploadFile $uploadFile)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', Rule::unique(Category::class)]
+            'category_id' => ['required', Rule::exists(Category::class, 'id')],
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', Rule::unique(Article::class)],
+            'image' => ['required', 'image', 'max:3000'],
+            'description' => ['required', 'string'],
         ]);
 
-        Category::create($data);
+        $data['image'] = $uploadFile->setFile($request->file('image'))
+            ->setUploadPath((new Article())->uploadFolder())
+            ->execute();
 
-        return redirect()->route('categories.index')->with('success', 'Category saved successfully.');
+        Article::create($data);
+
+        return redirect()->route('articles.index')->with('success', 'Article saved successfully.');
     }
 
     public function edit(Category $category)

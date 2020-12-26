@@ -18,6 +18,7 @@ class ArticleResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->when($this->slug, $this->slug),
+            'image_url' => $this->imageUrl(),
             'created_at_for_human' => $this->when($this->created_at, function () {
                 return $this->created_at->diffForHumans();
             }),
