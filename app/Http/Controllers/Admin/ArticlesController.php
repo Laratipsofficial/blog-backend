@@ -51,29 +51,42 @@ class ArticlesController extends Controller
         return redirect()->route('articles.index')->with('success', 'Article saved successfully.');
     }
 
-    public function edit(Category $category)
+    public function edit(Article $article)
     {
-        return Inertia::render('Categories/Create', [
+        return Inertia::render('Articles/Create', [
             'edit' => true,
-            'category' => new CategoryResource($category),
+            'article' => new ArticleResource($article),
+            'categories' => CategoryResource::collection(Category::select(['id', 'name'])->get()),
         ]);
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Article $article, UploadFile $uploadFile)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', Rule::unique(Category::class)->ignore($category->id)]
+            'category_id' => ['required', Rule::exists(Category::class, 'id')],
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', Rule::unique(Article::class)->ignore($article->id)],
+            'image' => ['nullable', 'image', 'max:3000'],
+            'description' => ['required', 'string'],
         ]);
 
-        $category->update($data);
+        $data['image'] = $article->image;
+        if ($request->file('image')) {
+            $article->deleteImage();
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+            $data['image'] = $uploadFile->setFile($request->file('image'))
+                ->setUploadPath($article->uploadFolder())
+                ->execute();
+        }
+
+        $article->update($data);
+
+        return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
     }
 
     public function destroy(Article $article)
     {
-        // TODO: Implement the delete image part
+        $article->deleteImage();
         $article->delete();
 
         return redirect()->route('articles.index')
