@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\UploadFile;
 use Inertia\Inertia;
 use App\Models\Setting;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAboutRequest;
@@ -38,7 +37,7 @@ class SettingsController extends Controller
         $data['hero_description'] = $request->get('hero_description');
 
         if ($request->file('hero_image')) {
-            $this->settings->deleteImage('hero_image');
+            $this->settings->deleteImage('data->hero_image');
 
             $imageName = (new UploadFile)
                 ->setFile($request->file('hero_image'))
@@ -58,7 +57,7 @@ class SettingsController extends Controller
         $data['about_description'] = $request->get('about_description');
 
         if ($request->file('about_image')) {
-            $this->settings->deleteImage('about_image');
+            $this->settings->deleteImage('data->about_image');
 
             $imageName = (new UploadFile)
                 ->setFile($request->file('about_image'))
@@ -78,7 +77,7 @@ class SettingsController extends Controller
         $data = $request->only(['address', 'email', 'phone', 'google_map_url']);
 
         if ($request->file('contact_image')) {
-            $this->settings->deleteImage('contact_image');
+            $this->settings->deleteImage('data->contact_image');
 
             $imageName = (new UploadFile)
                 ->setFile($request->file('contact_image'))

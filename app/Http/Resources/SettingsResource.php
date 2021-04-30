@@ -17,9 +17,9 @@ class SettingsResource extends JsonResource
         return [
             'hero_description' => $this->heroDescription(),
             'about_description' => $this->aboutDescription(),
-            'hero_image_url' => $this->imageUrl('hero_image'),
-            'about_image_url' => $this->imageUrl('about_image'),
-            'contact_image_url' => $this->imageUrl('contact_image'),
+            'hero_image_url' => $this->imageUrl('data->hero_image'),
+            'about_image_url' => $this->imageUrl('data->about_image'),
+            'contact_image_url' => $this->imageUrl('data->contact_image'),
             'address' => $this->address(),
             'phone' => $this->phone(),
             'email' => $this->email(),
